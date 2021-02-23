@@ -1,0 +1,10 @@
+/NICT_BERT-base_JapaneseWikipedia_32K_BPE/
+/NICT_BERT-base_JapaneseWikipedia_32K_BPE.zip
+/__pycache__/
+/all-v1.0.json.gz
+/rcqa_*.json
+*~
+/runs/
+/run_qa.py
+/trainer_qa.py
+/utils_qa.py
