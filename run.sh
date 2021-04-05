@@ -7,7 +7,7 @@ RCQAFILE="all-v1.0.json.gz"
 RCQAURL="http://www.cl.ecei.tohoku.ac.jp/rcqa/data/${RCQAFILE}"
 
 SCRIPTS="run_qa.py trainer_qa.py utils_qa.py"
-BASEURL="https://raw.githubusercontent.com/huggingface/transformers/master/examples/question-answering"
+BASEURL="https://raw.githubusercontent.com/huggingface/transformers/v4.4.2-release/examples/question-answering"
 
 MODEL=NICT_BERT-base_JapaneseWikipedia_32K_BPE
 BATCH=32
