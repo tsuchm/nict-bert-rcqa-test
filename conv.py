@@ -33,9 +33,12 @@ def tokenize(line):
     node = tagger.parseToNode(line)
     tokens = []
     while node:
-        surface = node.surface.encode('utf-8',errors='ignore').decode('utf-8')
-        if surface:
-            tokens.append(surface)
+        try:
+            surface = node.surface.encode('utf-8',errors='ignore').decode('utf-8')
+            if surface:
+                tokens.append(surface)
+        except:
+            pass
         node = node.next
     return ' '.join(tokens)
 
