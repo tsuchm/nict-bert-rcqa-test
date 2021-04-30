@@ -10,8 +10,14 @@
 
 ## 実行手順
 
-```
+```sh
 sh run.sh
+```
+
+または，以下のようにバッチジョブとして投入する．
+
+```sh
+qsub -q full-gpu -l select=1:ncpus=16:ngpus=8 run.sh 
 ```
 
 ## 変更部分

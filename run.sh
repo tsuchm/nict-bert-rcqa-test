@@ -14,6 +14,10 @@ BATCH=32
 LR=5e-5
 EPOCH=2
 
+if [ -n "${PBS_O_WORKDIR}" ]; then
+	cd "${PBS_O_WORKDIR}"
+fi
+
 if [ ! -f ${BERTFILE} ]; then
 	wget ${BERTURL}
 	unzip ${BERTFILE}
