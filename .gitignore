@@ -3,6 +3,7 @@
 /__pycache__/
 /all-v1.0.json.gz
 /rcqa_*.json
+/cached_*
 *~
 /runs/
 /train_output_*/
