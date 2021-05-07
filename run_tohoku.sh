@@ -53,7 +53,6 @@ python3 ${SCRIPTFILE} \
     --save_steps                  10000 \
     --fp16                        \
     --fp16_opt_level              O2
-exit 0
 
 python3 ${SCRIPTFILE} \
     --model_type                  bert \
