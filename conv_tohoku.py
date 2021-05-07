@@ -8,15 +8,16 @@ import sys
 import io
 
 import fugashi
-import mojimoji
+import unidic_lite
+import unicodedata
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-dicdir = '/var/lib/mecab/dic/juman-utf8'
-rcfile = '/etc/mecabrc'
+dicdir = unidic_lite.DICDIR
+rcfile = os.path.join(dicdir, "mecabrc")
 tagger = fugashi.GenericTagger(f'-r {rcfile} -d {dicdir}')
-assert tagger.dictionary_info[0]['charset'] == 'utf-8'
+assert tagger.dictionary_info[0]['charset'] == 'utf8'
 
 dataset = []
 with gzip.open("all-v1.0.json.gz", "rt", encoding="utf-8") as fp:
@@ -30,7 +31,7 @@ dev_dataset = [data for data in dataset if "2009" <= data["timestamp"] < "2010"]
 test_dataset = [data for data in dataset if "2010" <= data["timestamp"]]
 
 def tokenize(line):
-    line = mojimoji.han_to_zen(line).replace("\u3000", " ")
+    line = unicodedata.normalize("NFKC", line)
     tokens = []
     for w in tagger(line):
         try:
@@ -45,30 +46,26 @@ def convert(filename, datasplit):
         for i, document in enumerate(data["documents"]):
             q_id = "{}{:04d}".format(data["qid"], i + 1)
             question = tokenize(data["question"])
-            answer = "".join(ch for ch in tokenize(data["answer"]) if not ch.isspace())
+            answer = "".join(ch for ch in tokenize(data["answer"]) if not ch.isspace() and ch != "▁")
             context = tokenize(document["text"])
             is_impossible = document["score"] < 2
             if not is_impossible:
-                context_strip, offsets = zip(*[(ch, ptr) for ptr, ch in enumerate(context) if not ch.isspace()])
+                context_strip, offsets = zip(*[(ch, ptr) for ptr, ch in enumerate(context) if not ch.isspace() and ch != "▁"])
                 idx = "".join(context_strip).index(answer)
                 answer_start, answer_end = offsets[idx], offsets[idx + len(answer) - 1]
                 answer = context[answer_start:answer_end + 1]
-                entries.append({'answers': {'answer_start': [answer_start], 'text': [answer]},
-                                'context': context,
-                                'id': q_id,
-                                'question': question,
-                                'title': q_id})
-            else:
-                entries.append({'answers': {'answer_start': [], 'text': []},
-                                'context': context,
-                                'id': q_id,
-                                'question': question,
-                                'title': q_id})
+            entries.append({"title": q_id,
+                            "paragraphs": [{"context": context,
+                                            "qas": [{"id": q_id,
+                                                     "question": question,
+                                                     "is_impossible": is_impossible,
+                                                     "answers": [{"text": answer, "answer_start": answer_start}]
+                                                     if not is_impossible else []}]}]})
     return entries
 
-for filename, datasplit in (("rcqa_train.json", train_dataset),
-                            ("rcqa_dev.json", dev_dataset),
-                            ("rcqa_test.json", test_dataset)):
+for filename, datasplit in (("rcqa_tohoku_train.json", train_dataset),
+                            ("rcqa_tohoku_dev.json", dev_dataset),
+                            ("rcqa_tohoku_test.json", test_dataset)):
     entries = convert(filename, datasplit)
     with open(filename, "w", encoding="utf-8") as fp:
         json.dump({"data": entries}, fp, ensure_ascii=False)
