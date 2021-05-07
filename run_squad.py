@@ -203,7 +203,7 @@ def train(args, train_dataset, model, tokenizer):
 
             outputs = model(**inputs)
             # model outputs are always tuple in transformers (see doc)
-            loss = outputs[0]
+            loss = outputs['loss']
 
             if args.n_gpu > 1:
                 loss = loss.mean()  # mean() to average on multi-gpu parallel (not distributed) training
