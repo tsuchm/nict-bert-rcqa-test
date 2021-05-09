@@ -2,7 +2,7 @@
 /NICT_BERT-base_JapaneseWikipedia_32K_BPE.zip
 /__pycache__/
 /all-v1.0.json.gz
-/rcqa_*.json
+/data/**/rcqa_*.json
 /cached_*
 *~
 /runs/
