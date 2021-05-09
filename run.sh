@@ -9,9 +9,10 @@ RCQAURL="http://www.cl.ecei.tohoku.ac.jp/rcqa/data/${RCQAFILE}"
 SCRIPTS="run_qa.py trainer_qa.py utils_qa.py"
 BASEURL="https://raw.githubusercontent.com/huggingface/transformers/v4.4.2-release/examples/question-answering"
 
-TRAINFILE=rcqa_train.json
-VALIDFILE=rcqa_dev.json
-TESTFILE=rcqa_test.json
+DATADIR=data/juman
+TRAINFILE=${DATADIR}/rcqa_train.json
+VALIDFILE=${DATADIR}/rcqa_dev.json
+TESTFILE=${DATADIR}/rcqa_test.json
 
 MODEL=NICT_BERT-base_JapaneseWikipedia_32K_BPE
 BATCH=32
@@ -34,7 +35,8 @@ if [ ! -f ${RCQAFILE} ]; then
 fi
 
 if [ ! -f ${TRAINFILE} ]; then
-	python3 conv.py
+	mkdir -p ${DATADIR}
+	cd ${DATADIR} && python3 ../../conv.py --rcqafile ../../${RCQAFILE}
 fi
 
 for f in ${SCRIPTS}; do

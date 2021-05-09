@@ -6,9 +6,10 @@ RCQAURL="http://www.cl.ecei.tohoku.ac.jp/rcqa/data/${RCQAFILE}"
 SCRIPTFILE=run_squad.py
 SCRIPTURL="https://raw.githubusercontent.com/huggingface/transformers/v4.4.2/examples/legacy/question-answering/${SCRIPTFILE}"
 
-TRAINFILE=rcqa_tohoku_train.json
-VALIDFILE=rcqa_tohoku_dev.json
-TESTFILE=rcqa_tohoku_test.json
+DATADIR=data/unidic_old
+TRAINFILE=rcqa_train.json
+VALIDFILE=rcqa_dev.json
+TESTFILE=rcqa_test.json
 
 MODELPATH=cl-tohoku/bert-base-japanese-v2
 MODELNAME=`echo ${MODELPATH}|sed s,/,-,`
@@ -27,8 +28,9 @@ if [ ! -f ${RCQAFILE} ]; then
 	wget ${RCQAURL}
 fi
 
-if [ ! -f ${TRAINFILE} ]; then
-	python3 conv_tohoku.py
+if [ ! -f ${DATADIR}/${TRAINFILE} ]; then
+	mkdir -p ${DATADIR}
+	cd ${DATADIR} && python3 ../../conv.py --rcqafile ../../${RCQAFILE} --oldformat --unidic
 fi
 
 if [ ! -f ${SCRIPTFILE} ]; then
@@ -39,7 +41,7 @@ python3 ${SCRIPTFILE} \
     --model_type                  bert \
     --model_name_or_path          ${MODELPATH} \
     --output_dir                  train_output_${MODELNAME}_batch${BATCH}_lr${LR}_epochs${EPOCH} \
-    --data_dir                    `pwd` \
+    --data_dir                    ${DATADIR} \
     --train_file                  ${TRAINFILE} \
     --predict_file                ${VALIDFILE} \
     --version_2_with_negative     \
@@ -58,7 +60,7 @@ python3 ${SCRIPTFILE} \
     --model_type                  bert \
     --model_name_or_path          train_output_${MODELNAME}_batch${BATCH}_lr${LR}_epochs${EPOCH} \
     --output_dir                  eval_output_${MODELNAME}_batch${BATCH}_lr${LR}_epochs${EPOCH} \
-    --data_dir                    `pwd` \
+    --data_dir                    ${DATADIR} \
     --predict_file                ${TESTFILE} \
     --overwrite_cache             \
     --version_2_with_negative     \
