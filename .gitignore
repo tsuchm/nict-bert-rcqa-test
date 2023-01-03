@@ -6,8 +6,10 @@
 /cached_*
 *~
 /runs/
+/logs/
 /train_output_*/
 /eval_output_*/
+/search_output_*/
 /run_qa.py
 /trainer_qa.py
 /utils_qa.py
