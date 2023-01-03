@@ -5,6 +5,8 @@
 /data/**/rcqa_*.json
 /cached_*
 *~
+*.sh.o*
+*.sh.e*
 /runs/
 /logs/
 /train_output_*/
