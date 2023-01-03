@@ -7,7 +7,7 @@ RCQAFILE="all-v1.0.json.gz"
 RCQAURL="http://www.cl.ecei.tohoku.ac.jp/rcqa/data/${RCQAFILE}"
 
 SCRIPTS="run_qa.py trainer_qa.py utils_qa.py"
-BASEURL="https://raw.githubusercontent.com/huggingface/transformers/v4.4.2-release/examples/question-answering"
+BASEURL="https://raw.githubusercontent.com/huggingface/transformers/v4.25.1/examples/pytorch/question-answering"
 
 DATADIR=data/juman
 TRAINFILE=${DATADIR}/rcqa_train.json
@@ -25,7 +25,7 @@ if [ -n "${PBS_O_WORKDIR}" ]; then
 	fi
 fi
 
-if [ ! -f ${BERTFILE} ]; then
+if [ ! -d ${MODEL} ]; then
 	wget ${BERTURL}
 	unzip ${BERTFILE}
 fi
