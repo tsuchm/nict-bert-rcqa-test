@@ -1,6 +1,8 @@
 #!/bin/sh
 #PBS -q full-gpu
 #PBS -l select=1:ncpus=16:ngpus=8
+#PBS -k doe
+#PBS -j oe
 
 RCQAFILE="all-v1.0.json.gz"
 RCQAURL="http://www.cl.ecei.tohoku.ac.jp/rcqa/data/${RCQAFILE}"

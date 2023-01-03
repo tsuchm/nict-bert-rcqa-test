@@ -1,4 +1,8 @@
 #!/bin/sh
+#PBS -q full-gpu
+#PBS -l select=1:ncpus=16:ngpus=8
+#PBS -k doe
+#PBS -j oe
 
 BERTFILE="NICT_BERT-base_JapaneseWikipedia_32K_BPE.zip"
 BERTURL="https://alaginrc.nict.go.jp/nict-bert/${BERTFILE}"
