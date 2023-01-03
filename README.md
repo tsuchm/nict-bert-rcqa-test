@@ -27,20 +27,21 @@ qsub -q full-gpu -l select=1:ncpus=16:ngpus=8 run.sh
 以下のような性能が得られるはずである．
 
 ```
-***** Eval results *****
-  HasAns_exact = 71.6791165962975
-  HasAns_f1 = 74.75169513952163
-  HasAns_total = 3079
-  NoAns_exact = 82.9945143594708
-  NoAns_f1 = 82.9945143594708
-  NoAns_total = 3099
-  best_exact = 77.37131757850437
-  best_exact_thresh = 0.0
-  best_f1 = 78.90263343065514
-  best_f1_thresh = 0.0
-  exact = 77.35513111039171
-  f1 = 78.88644696254237
-  total = 6178
+***** eval metrics *****
+  eval_HasAns_exact      = 72.9782
+  eval_HasAns_f1         = 75.8301
+  eval_HasAns_total      =    3079
+  eval_NoAns_exact       = 81.8006
+  eval_NoAns_f1          = 81.8006
+  eval_NoAns_total       =    3099
+  eval_best_exact        = 77.4199
+  eval_best_exact_thresh =     0.0
+  eval_best_f1           = 78.8412
+  eval_best_f1_thresh    =     0.0
+  eval_exact             = 77.4037
+  eval_f1                =  78.825
+  eval_samples           =    6181
+  eval_total             =    6178
 ```
 
 ## 自家製 BERT モデル
@@ -62,20 +63,55 @@ qsub -q full-gpu -l select=1:ncpus=16:ngpus=8 run_jawiki.sh
 
 ```
 ***** eval metrics *****
-  HasAns_exact      = 68.4638
-  HasAns_f1         = 71.9656
-  HasAns_total      =    3079
-  NoAns_exact       = 84.1239
-  NoAns_f1          = 84.1239
-  NoAns_total       =    3099
-  best_exact        = 76.3192
-  best_exact_thresh =     0.0
-  best_f1           = 78.0644
-  best_f1_thresh    =     0.0
-  eval_samples      =    6183
-  exact             = 76.3192
-  f1                = 78.0644
-  total             =    6178
+  eval_HasAns_exact      = 68.2364
+  eval_HasAns_f1         = 71.3658
+  eval_HasAns_total      =    3079
+  eval_NoAns_exact       = 83.3817
+  eval_NoAns_f1          = 83.3817
+  eval_NoAns_total       =    3099
+  eval_best_exact        = 75.8336
+  eval_best_exact_thresh =     0.0
+  eval_best_f1           = 77.3932
+  eval_best_f1_thresh    =     0.0
+  eval_exact             = 75.8336
+  eval_f1                = 77.3932
+  eval_samples           =    6183
+  eval_total             =    6178
+```
+
+## 自家製 RoBERTa モデル
+
+[自家製 RoBERTa モデル](https://github.com/tutcsis/roberta-japanese)が，正常に動作しているかを確認する手順．
+このリポジトリと同一階層のディレクトリに，[自家製 RoBERTa モデル](https://github.com/tutcsis/roberta-japanese)を checkout して学習が完了しているという想定．
+
+```sh
+sh run_roberta.sh
+```
+
+または，以下のようにバッチジョブとして投入する．
+
+```sh
+qsub -q full-gpu -l select=1:ncpus=16:ngpus=8 run_roberta.sh
+```
+
+ハイパーパラメータの探索は行っていないが，東北大 BERT モデルとほぼ同等の性能が出るはずである．
+
+```
+***** eval metrics *****
+  eval_HasAns_exact      =  71.127
+  eval_HasAns_f1         = 75.6204
+  eval_HasAns_total      =    3079
+  eval_NoAns_exact       = 67.5702
+  eval_NoAns_f1          = 67.5702
+  eval_NoAns_total       =    3099
+  eval_best_exact        =  69.359
+  eval_best_exact_thresh =     0.0
+  eval_best_f1           = 71.5876
+  eval_best_f1_thresh    =     0.0
+  eval_exact             = 69.3428
+  eval_f1                = 71.5822
+  eval_samples           =    6181
+  eval_total             =    6178
 ```
 
 ## 東北大 BERT モデル
