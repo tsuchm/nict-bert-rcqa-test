@@ -98,18 +98,18 @@ qsub -q full-gpu -l select=1:ncpus=16:ngpus=8 run_roberta.sh
 
 ```
 ***** eval metrics *****
-  eval_HasAns_exact      = 74.0175
-  eval_HasAns_f1         =   77.79
+  eval_HasAns_exact      = 74.3423
+  eval_HasAns_f1         = 78.1359
   eval_HasAns_total      =    3079
-  eval_NoAns_exact       = 71.7005
-  eval_NoAns_f1          = 71.7005
+  eval_NoAns_exact       = 71.2165
+  eval_NoAns_f1          = 71.2165
   eval_NoAns_total       =    3099
-  eval_best_exact        = 72.8715
+  eval_best_exact        = 72.7905
   eval_best_exact_thresh =     0.0
-  eval_best_f1           = 74.7516
+  eval_best_f1           = 74.6812
   eval_best_f1_thresh    =     0.0
-  eval_exact             = 72.8553
-  eval_f1                = 74.7354
+  eval_exact             = 72.7744
+  eval_f1                =  74.665
   eval_samples           =    6181
   eval_total             =    6178
 ```

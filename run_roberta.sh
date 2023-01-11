@@ -15,7 +15,7 @@ TRAINFILE=${DATADIR}/rcqa_train.json
 VALIDFILE=${DATADIR}/rcqa_dev.json
 TESTFILE=${DATADIR}/rcqa_test.json
 
-MODELDIR=../roberta-japanese/models/jawiki-20210301-bs8192-lr4e-04-epoch16
+MODELDIR=../roberta-japanese/models/jawiki-20210301-bs8192-lr4e-04-epoch24
 MODELNAME=roberta-`basename ${MODELDIR}`
 BATCH=32
 LR=5e-5
